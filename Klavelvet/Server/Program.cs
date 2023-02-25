@@ -1,16 +1,29 @@
 global using Klavelvet.Shared;
 global using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.ResponseCompression;
+global using Klavelvet.Server.Data;
+global using Klavelvet.Shared.Models;
+using Klavelvet.Server.Repository.ProductRepository;
+using Klavelvet.Server.Repository.RepositoryManager;
+using Klavelvet.Server;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+
+builder.Services.AddDbContext<DataContext>(options =>
+{
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+});
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.AddAutoMapper(typeof(MappingProfile));
+builder.Services.AddScoped<IProductRepository, ProductRepository>();
+builder.Services.AddScoped<IRepositoryManager, RepositoryManager>();
 
 var app = builder.Build();
 
