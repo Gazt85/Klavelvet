@@ -7,5 +7,7 @@ namespace Klavelvet.Client.Services.ProductService
         List<ProductDto> Products { get; set; }
 
         Task GetProducts();
+
+        Task<ProductDto> GetProduct(Guid id);
     }
 }

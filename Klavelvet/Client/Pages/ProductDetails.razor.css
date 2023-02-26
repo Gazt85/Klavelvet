@@ -1,0 +1,25 @@
+﻿.product-image{
+    width:100%;
+}
+
+.media-img-wrapper {
+    max-width: 500px;
+    max-height: 500px;
+    text-align: center;
+}
+
+.product-description {
+    font-style: italic;
+    white-space: pre-line;
+}
+
+@media (max-width: 1023.98px){
+    .media-img{
+        max-width: 300px
+    }
+
+    .media-img-wrapper{
+        width: 100%;
+        height: auto;
+    }
+}

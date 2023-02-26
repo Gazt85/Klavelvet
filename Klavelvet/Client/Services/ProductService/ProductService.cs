@@ -13,12 +13,19 @@ namespace Klavelvet.Client.Services.ProductService
         }
         public List<ProductDto> Products { get; set; } = new();
 
+        public async Task<ProductDto> GetProduct(Guid productId)
+        {
+            var result = await _httpClient.GetFromJsonAsync<ProductDto>($"api/products/{productId}");
+
+            return result;
+        }
+
         public async Task GetProducts()
         {
-            var result = await _httpClient.GetFromJsonAsync<List<ProductDto>>("api/Product");
+            var result = await _httpClient.GetFromJsonAsync<ServiceResponse<List<ProductDto>>>("api/products");
 
-            if (result != null)
-                Products = result;
+            if (result != null && result.Data != null)
+                Products = result.Data;
         }
     }
 }
