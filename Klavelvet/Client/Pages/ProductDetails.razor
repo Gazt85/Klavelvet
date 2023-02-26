@@ -1,0 +1,47 @@
+﻿@page "/product/{id:guid}"
+
+@if (@Product == null)
+{
+<span>Loading Product...</span>
+}
+else
+{
+    <div class="card">
+    <div class="card-body">
+        <div class="row">
+            <div class="col">
+                <h2>@Product.Title</h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                @*<img class="media-img" src="@Product.ImageURL" alt="@Product.Title" />*@
+                    <img class="product-image" src="@Product.ImageURL" alt="@Product.Title" />
+            </div>
+            <div class="col-md-8">
+                <div class="row">
+                    <div class="col">
+                        <h3 class="price">Precio: @Product.Price</h3>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <span class="product-description">
+                            @Product.Description
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<br />
+}
+
+
+<div class="row">
+    <div class="col">
+        <a href="/products" class="btn btn-success">Volver</a>
+    </div>
+</div>
+
