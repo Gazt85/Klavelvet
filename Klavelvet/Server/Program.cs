@@ -5,6 +5,10 @@ global using Klavelvet.Shared.Models;
 using Klavelvet.Server.Repository.ProductRepository;
 using Klavelvet.Server.Repository.RepositoryManager;
 using Klavelvet.Server;
+using NLog;
+using LoggerService;
+using Contracts;
+using Klavelvet.Server.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,6 +19,9 @@ builder.Services.AddDbContext<DataContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
 
+LogManager.LoadConfiguration(string.Concat(Directory.GetCurrentDirectory(), "/nlog.config"));
+
+
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
 
@@ -22,10 +29,17 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddAutoMapper(typeof(MappingProfile));
+builder.Services.AddSingleton<ILoggerService, LoggerManager>();
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped<IRepositoryManager, RepositoryManager>();
 
 var app = builder.Build();
+
+var logger = app.Services.GetRequiredService<ILoggerService>();
+app.ConfigureExceptionHandler(logger);
+
+if (app.Environment.IsProduction())
+    app.UseHsts();
 
 app.UseSwaggerUI();
 

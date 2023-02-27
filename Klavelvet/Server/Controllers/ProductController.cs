@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Contracts;
 using Klavelvet.Server.Repository.RepositoryManager;
 using Klavelvet.Shared.Data_Transfer_Objects.Products;
 using Microsoft.AspNetCore.Mvc;
@@ -11,26 +12,25 @@ namespace Klavelvet.Server.Controllers
     {
         private readonly IRepositoryManager _repositoryManager;
         private readonly IMapper _mapper;
+        private readonly ILoggerService _loggerService;
 
-        public ProductController(IRepositoryManager repositoryManager, IMapper mapper)
+        public ProductController(IRepositoryManager repositoryManager,
+            IMapper mapper,
+            ILoggerService loggerService)
         {
             _repositoryManager = repositoryManager;
             _mapper = mapper;
+            _loggerService=loggerService;
         }
 
         [HttpGet]
-        public async Task<ActionResult<ServiceResponse<List<ProductDto>>>> GetProducts()
+        public async Task<ActionResult<List<ProductDto>>> GetProducts()
         {
             var products = await _repositoryManager.Product.GetProductsAsync(trackChanges: false);
 
-            var productsDto = _mapper.Map<IEnumerable<ProductDto>>(products);
+            var productsDto = _mapper.Map<IEnumerable<ProductDto>>(products.Data).ToList();
 
-            var response = new ServiceResponse<List<ProductDto>>()
-            {
-                Data = productsDto.ToList()
-            };
-
-            return Ok(response);
+            return Ok(productsDto);          
         }
 
         [HttpGet("{productId}") ]
@@ -40,7 +40,7 @@ namespace Klavelvet.Server.Controllers
 
             if (product == null)
             {
-               // _logger.LogInfo($"Appointment with id: {id} doesn't exists in the database.");
+                _loggerService.LogError($"Product with id: {productId} doesn't exists in the database.");
                 return NotFound();
             }
             else
