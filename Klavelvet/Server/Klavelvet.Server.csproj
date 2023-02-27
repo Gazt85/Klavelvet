@@ -19,12 +19,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\LoggerService\LoggerService.csproj" />
     <ProjectReference Include="..\Client\Klavelvet.Client.csproj" />
     <ProjectReference Include="..\Shared\Klavelvet.Shared.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Services\" />
   </ItemGroup>
 
 
