@@ -12,7 +12,13 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Contracts\Contracts.csproj" />
+    <ProjectReference Include="..\..\Klavelvet.I18N\Klavelvet.I18N.csproj" />
     <ProjectReference Include="..\Shared\Klavelvet.Shared.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\images\products\accesories\" />
   </ItemGroup>
 
 </Project>

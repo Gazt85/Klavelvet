@@ -1,5 +1,19 @@
 ﻿@page "/"
+@page "/{cateogryUrl}"
+
+@using Klavelvet.Client.Services.ProductService;
+@inject IProductService ProductService
 
 <PageTitle>Klavelvet</PageTitle>
 
 <ProductList/>
+
+@code{
+    [Parameter]
+    public string CateogryUrl { get; set; }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        await ProductService.GetProducts(CateogryUrl);
+    }
+}

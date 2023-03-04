@@ -9,6 +9,8 @@ using NLog;
 using LoggerService;
 using Contracts;
 using Klavelvet.Server.Extensions;
+using Klavelvet.Server.Repository.CategoryRepository;
+using Contracts.CategoryContracts;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -32,6 +34,7 @@ builder.Services.AddAutoMapper(typeof(MappingProfile));
 builder.Services.AddSingleton<ILoggerService, LoggerManager>();
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped<IRepositoryManager, RepositoryManager>();
+builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 
 var app = builder.Build();
 

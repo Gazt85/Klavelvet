@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Klavelvet.Shared.Data_Transfer_Objects.Category;
 using Klavelvet.Shared.Data_Transfer_Objects.Products;
 
 namespace Klavelvet.Server
@@ -7,7 +8,9 @@ namespace Klavelvet.Server
     {
         public MappingProfile()
         {
-            CreateMap<Product, ProductDto>();            
+            CreateMap<Product, ProductDto>();
+
+            CreateMap<Category, CategoryDto>();
         }
         
     }

@@ -4,9 +4,11 @@ namespace Klavelvet.Client.Services.ProductService
 {
     public interface IProductService
     {
+        event Action ProductsChanged;
+
         List<ProductDto> Products { get; set; }
 
-        Task GetProducts();
+        Task GetProducts(string? categoryUrl = null);
 
         Task<ProductDto> GetProduct(Guid id);
     }

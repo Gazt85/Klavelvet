@@ -1,4 +1,5 @@
-﻿using Klavelvet.Server.Repository.ProductRepository;
+﻿using Contracts.CategoryContracts;
+using Klavelvet.Server.Repository.ProductRepository;
 
 namespace Klavelvet.Server.Repository.RepositoryManager
 {
@@ -7,6 +8,8 @@ namespace Klavelvet.Server.Repository.RepositoryManager
         private readonly DataContext _dataContext;
 
         private IProductRepository _productRepository;
+
+        private ICategoryRepository _categoryRepository;        
 
         public RepositoryManager(DataContext dataContext)
         {
@@ -21,6 +24,17 @@ namespace Klavelvet.Server.Repository.RepositoryManager
                     _productRepository = new ProductRepository.ProductRepository(_dataContext);
 
                 return _productRepository;
+            }
+        }
+
+        public ICategoryRepository Category
+        {
+            get
+            {
+                if (_categoryRepository == null)
+                    _categoryRepository = new CategoryRepository.CategoryRepository(_dataContext);
+
+                return _categoryRepository;
             }
         }
     }

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Klavelvet.Shared.Models
 {
@@ -19,5 +14,10 @@ namespace Klavelvet.Shared.Models
 
         [Column(TypeName ="decimal(18,2)")]
         public decimal Price { get; set; }
+
+        public Category? Category { get; set; }
+
+        public int CategoryId { get; set; }
+
     }
 }

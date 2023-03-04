@@ -1,6 +1,7 @@
 ﻿using Klavelvet.Client.Services.ProductService;
 using Klavelvet.Shared.Data_Transfer_Objects.Products;
 using Microsoft.AspNetCore.Components;
+using Klavelvet.I18N;
 
 namespace Klavelvet.Client.Pages
 {

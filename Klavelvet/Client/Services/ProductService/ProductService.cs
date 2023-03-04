@@ -13,12 +13,28 @@ namespace Klavelvet.Client.Services.ProductService
         private readonly JsonSerializerOptions _options =
             new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
 
+        public event Action ProductsChanged;
+
         public ProductService(HttpClient httpClient, NavigationManager navigationManager)
         {
             _httpClient = httpClient;
             _unsuccessfulStatusCodeHandler = new UnsuccessfulStatusCodeHandler(navigationManager);
         }
         public List<ProductDto> Products { get; set; } = new();
+
+        public async Task GetProducts(string? categoryUrl = null)
+        {
+            var response = categoryUrl == null ?
+                await _httpClient.GetAsync("api/products") :
+                await _httpClient.GetAsync($"api/products/category/{categoryUrl}");
+
+            var content = await response.Content.ReadAsStringAsync();
+            _unsuccessfulStatusCodeHandler.HandleStatusCode(response);
+
+            Products = JsonSerializer.Deserialize<List<ProductDto>>(content, _options);
+
+            ProductsChanged.Invoke();
+        }
 
         public async Task<ProductDto> GetProduct(Guid productId)
         {
@@ -27,19 +43,7 @@ namespace Klavelvet.Client.Services.ProductService
             var content = await response.Content.ReadAsStringAsync();
             _unsuccessfulStatusCodeHandler.HandleStatusCode(response);
 
-            var result = JsonSerializer.Deserialize<ProductDto>(content, _options);
-
-            return result;
-        }
-
-        public async Task GetProducts()
-        {
-            var response = await _httpClient.GetAsync("api/products");
-
-            var content = await response.Content.ReadAsStringAsync();
-            _unsuccessfulStatusCodeHandler.HandleStatusCode(response);
-
-            Products = JsonSerializer.Deserialize<List<ProductDto>>(content, _options);
-        }
+            return JsonSerializer.Deserialize<ProductDto>(content, _options);
+        }       
     }
 }
