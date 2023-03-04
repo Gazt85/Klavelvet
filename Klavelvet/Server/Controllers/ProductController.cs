@@ -2,6 +2,7 @@
 using Contracts;
 using Klavelvet.Server.Repository.RepositoryManager;
 using Klavelvet.Shared.Data_Transfer_Objects.Products;
+using Klavelvet.Shared.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Klavelvet.Server.Controllers
@@ -28,12 +29,34 @@ namespace Klavelvet.Server.Controllers
         {
             var products = await _repositoryManager.Product.GetProductsAsync(trackChanges: false);
 
-            var productsDto = _mapper.Map<IEnumerable<ProductDto>>(products.Data).ToList();
+            if (products == null)
+            {
+                _loggerService.LogError($"There are no Products in the database.");
+                return NotFound();
+            }
 
-            return Ok(productsDto);          
+            var productsDto = _mapper.Map<IEnumerable<ProductDto>>(products).ToList();
+
+            return Ok(productsDto);
         }
 
-        [HttpGet("{productId}") ]
+        [HttpGet("category/{categoryUrl}")]
+        public async Task<ActionResult<List<ProductDto>>> GetProductsByCategory(string categoryUrl)
+        {
+            var products = await _repositoryManager.Product.GetProductsByCategoryAsync(categoryUrl, trackChanges: false);
+
+            if (products == null)
+            {
+                _loggerService.LogError($"There are no Products for the category {categoryUrl} in the database.");
+                return NotFound();
+            }
+
+            var productsDto = _mapper.Map<IEnumerable<ProductDto>>(products).ToList();
+
+            return Ok(productsDto);
+        }
+
+        [HttpGet("{productId}")]
         public async Task<ActionResult<ProductDto>> GetProduct(Guid productId)
         {
             var product = await _repositoryManager.Product.GetProductAsync(productId, trackChanges: false);
@@ -43,11 +66,10 @@ namespace Klavelvet.Server.Controllers
                 _loggerService.LogError($"Product with id: {productId} doesn't exists in the database.");
                 return NotFound();
             }
-            else
-            {
-                var productDto = _mapper.Map<ProductDto>(product);
-                return Ok(productDto);
-            }          
+
+            var productDto = _mapper.Map<ProductDto>(product);
+            return Ok(productDto);
+
         }
     }
 }

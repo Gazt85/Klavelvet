@@ -17,5 +17,7 @@ namespace Klavelvet.Shared.Data_Transfer_Objects.Products
         public string ImageURL { get; set; } = string.Empty;
 
         public decimal Price { get; set; }
+
+        public int CategoryId { get; set; }
     }
 }

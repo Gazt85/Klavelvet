@@ -2,7 +2,9 @@
 {
     public interface IProductRepository
     {
-        Task<ServiceResponse<List<Product>>> GetProductsAsync(bool trackChanges);
+        Task<List<Product>> GetProductsAsync(bool trackChanges);
+
+        Task<List<Product>> GetProductsByCategoryAsync(string cateogryUrl,bool trackChanges);
 
         Task<Product> GetProductAsync(Guid id, bool trackChanges);
     }

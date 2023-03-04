@@ -22,11 +22,62 @@ namespace Klavelvet.Server.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("Klavelvet.Shared.Models.Category", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Url")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Categories");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+                            Name = "Corsets",
+                            Url = "corsets"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+                            Name = "Lingerie",
+                            Url = "lingerie"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+                            Name = "Accesories",
+                            Url = "accesories"
+                        });
+                });
+
             modelBuilder.Entity("Klavelvet.Shared.Models.Product", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -45,105 +96,130 @@ namespace Klavelvet.Server.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CategoryId");
+
                     b.ToTable("Products");
 
                     b.HasData(
                         new
                         {
-                            Id = new Guid("64ce47e8-28c3-4386-89dc-7d4a4912677c"),
+                            Id = new Guid("a1da89c8-9d11-4808-aec3-e25a3117d29c"),
+                            CategoryId = 1,
                             Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed in massa purus. Fusce eleifend ullamcorper diam, vel dictum velit auctor vitae. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Praesent ultrices dolor sit amet lorem posuere, eget rhoncus ipsum euismod.",
-                            ImageURL = "https://example.com/image1.jpg",
+                            ImageURL = "https://upload.wikimedia.org/wikipedia/commons/0/01/Corset1878taille46_300gram.png",
                             Price = 49.99m,
                             Title = "Lorem ipsum corset 1"
                         },
                         new
                         {
-                            Id = new Guid("28c156a8-103a-4fe5-92e7-f76015802257"),
+                            Id = new Guid("fec703b8-d206-408f-ade9-0b0c338ea98b"),
+                            CategoryId = 1,
                             Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent tristique auctor nibh vel venenatis. Praesent consequat, erat vitae venenatis volutpat, justo dolor imperdiet ipsum, vel euismod mi odio a dolor. Donec iaculis, ante ac tempor accumsan, urna nisi lacinia justo, sed lobortis orci odio ac augue.",
-                            ImageURL = "https://example.com/image2.jpg",
+                            ImageURL = "/images/products/71vhl6wsxcl._ac_ul400_.jpg",
                             Price = 69.99m,
                             Title = "Lorem ipsum corset 2"
                         },
                         new
                         {
-                            Id = new Guid("8a613382-5e9f-4958-a1f9-aef56594118d"),
+                            Id = new Guid("7d5a1144-d392-49d5-be2e-d926f553901f"),
+                            CategoryId = 1,
                             Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed in massa purus. Fusce eleifend ullamcorper diam, vel dictum velit auctor vitae. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Praesent ultrices dolor sit amet lorem posuere, eget rhoncus ipsum euismod.",
-                            ImageURL = "https://example.com/image3.jpg",
-                            Price = 19.99m,
-                            Title = "Lorem ipsum lingerie 1"
-                        },
-                        new
-                        {
-                            Id = new Guid("32a4f616-c953-44f1-944d-2e375632b2ee"),
-                            Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent tristique auctor nibh vel venenatis. Praesent consequat, erat vitae venenatis volutpat, justo dolor imperdiet ipsum, vel euismod mi odio a dolor. Donec iaculis, ante ac tempor accumsan, urna nisi lacinia justo, sed lobortis orci odio ac augue.",
-                            ImageURL = "https://example.com/image4.jpg",
-                            Price = 29.99m,
-                            Title = "Lorem ipsum lingerie 2"
-                        },
-                        new
-                        {
-                            Id = new Guid("20f77013-dd95-4b9c-87f4-018d2c894a86"),
-                            Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed in massa purus. Fusce eleifend ullamcorper diam, vel dictum velit auctor vitae. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Praesent ultrices dolor sit amet lorem posuere, eget rhoncus ipsum euismod.",
-                            ImageURL = "https://example.com/image1.jpg",
+                            ImageURL = "/images/products/61+xvxreiyl._ac_ul1001_.jpg",
                             Price = 49.99m,
                             Title = "Lorem ipsum corset 3"
                         },
                         new
                         {
-                            Id = new Guid("6d8fc9d1-b598-4015-b3cf-e74bf95b1218"),
+                            Id = new Guid("6a063e94-37a5-4019-be3d-664dd453afa9"),
+                            CategoryId = 1,
                             Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent tristique auctor nibh vel venenatis. Praesent consequat, erat vitae venenatis volutpat, justo dolor imperdiet ipsum, vel euismod mi odio a dolor. Donec iaculis, ante ac tempor accumsan, urna nisi lacinia justo, sed lobortis orci odio ac augue.",
-                            ImageURL = "https://example.com/image2.jpg",
+                            ImageURL = "/images/products/no-photo-placeholder.png",
                             Price = 69.99m,
                             Title = "Lorem ipsum corset 4"
                         },
                         new
                         {
-                            Id = new Guid("a4cfb645-90a2-40ba-a4b6-48e06653360b"),
+                            Id = new Guid("9fd60b55-ab68-46bb-a683-9dcf766c5612"),
+                            CategoryId = 2,
                             Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed in massa purus. Fusce eleifend ullamcorper diam, vel dictum velit auctor vitae. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Praesent ultrices dolor sit amet lorem posuere, eget rhoncus ipsum euismod.",
-                            ImageURL = "https://example.com/image3.jpg",
+                            ImageURL = "/images/products/no-photo-placeholder.png",
+                            Price = 19.99m,
+                            Title = "Lorem ipsum lingerie 1"
+                        },
+                        new
+                        {
+                            Id = new Guid("d9433ebc-3715-4157-8edc-25e3502527e2"),
+                            CategoryId = 2,
+                            Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent tristique auctor nibh vel venenatis. Praesent consequat, erat vitae venenatis volutpat, justo dolor imperdiet ipsum, vel euismod mi odio a dolor. Donec iaculis, ante ac tempor accumsan, urna nisi lacinia justo, sed lobortis orci odio ac augue.",
+                            ImageURL = "/images/products/no-photo-placeholder.png",
+                            Price = 29.99m,
+                            Title = "Lorem ipsum lingerie 2"
+                        },
+                        new
+                        {
+                            Id = new Guid("df5b6339-e65b-488f-b837-b7434445ce54"),
+                            CategoryId = 2,
+                            Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed in massa purus. Fusce eleifend ullamcorper diam, vel dictum velit auctor vitae. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Praesent ultrices dolor sit amet lorem posuere, eget rhoncus ipsum euismod.",
+                            ImageURL = "/images/products/no-photo-placeholder.png",
                             Price = 19.99m,
                             Title = "Lorem ipsum lingerie 3"
                         },
                         new
                         {
-                            Id = new Guid("243383bb-5cb0-48bc-909b-316405792731"),
+                            Id = new Guid("9a9f0aca-829a-49ba-834f-fb7c67bb3f14"),
+                            CategoryId = 2,
                             Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent tristique auctor nibh vel venenatis. Praesent consequat, erat vitae venenatis volutpat, justo dolor imperdiet ipsum, vel euismod mi odio a dolor. Donec iaculis, ante ac tempor accumsan, urna nisi lacinia justo, sed lobortis orci odio ac augue.",
-                            ImageURL = "https://example.com/image4.jpg",
+                            ImageURL = "/images/products/no-photo-placeholder.png",
                             Price = 29.99m,
                             Title = "Lorem ipsum lingerie 4"
                         },
                         new
                         {
-                            Id = new Guid("7d850c3c-91e8-4f02-a534-a1f68af066c7"),
+                            Id = new Guid("5cc1a1e7-8f22-42cd-b62e-22ddb1554772"),
+                            CategoryId = 3,
                             Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed in massa purus. Fusce eleifend ullamcorper diam, vel dictum velit auctor vitae. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Praesent ultrices dolor sit amet lorem posuere, eget rhoncus ipsum euismod.",
-                            ImageURL = "https://example.com/image1.jpg",
+                            ImageURL = "/images/products/accesories/bracelet_1.png",
                             Price = 49.99m,
-                            Title = "Lorem ipsum corset 5"
+                            Title = "Lorem ipsum bracelet 1"
                         },
                         new
                         {
-                            Id = new Guid("c64c4158-6eaf-4a5e-bc4a-743b3fb7a3b9"),
+                            Id = new Guid("640f3165-8940-4768-82c9-9629873cb1a9"),
+                            CategoryId = 3,
                             Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent tristique auctor nibh vel venenatis. Praesent consequat, erat vitae venenatis volutpat, justo dolor imperdiet ipsum, vel euismod mi odio a dolor. Donec iaculis, ante ac tempor accumsan, urna nisi lacinia justo, sed lobortis orci odio ac augue.",
-                            ImageURL = "https://example.com/image2.jpg",
+                            ImageURL = "/images/products/no-photo-placeholder.png",
                             Price = 69.99m,
-                            Title = "Lorem ipsum corset 6"
+                            Title = "Lorem ipsum bracelet 2"
                         },
                         new
                         {
-                            Id = new Guid("154c3480-4b7e-413a-b5c9-12708d472ddf"),
+                            Id = new Guid("843b31fa-e860-4ca9-9b74-42cff6ac4bc7"),
+                            CategoryId = 3,
                             Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed in massa purus. Fusce eleifend ullamcorper diam, vel dictum velit auctor vitae. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Praesent ultrices dolor sit amet lorem posuere, eget rhoncus ipsum euismod.",
-                            ImageURL = "https://example.com/image3.jpg",
+                            ImageURL = "/images/products/no-photo-placeholder.png",
                             Price = 19.99m,
-                            Title = "Lorem ipsum lingerie 5"
+                            Title = "Lorem ipsum bracelet 3"
                         },
                         new
                         {
-                            Id = new Guid("fedcee37-7b89-4b5b-a7fb-434dbd6fdd97"),
+                            Id = new Guid("3b9b19a7-3d59-499c-8d1b-94fa1b1cf8a8"),
+                            CategoryId = 3,
                             Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent tristique auctor nibh vel venenatis. Praesent consequat, erat vitae venenatis volutpat, justo dolor imperdiet ipsum, vel euismod mi odio a dolor. Donec iaculis, ante ac tempor accumsan, urna nisi lacinia justo, sed lobortis orci odio ac augue.",
-                            ImageURL = "https://example.com/image4.jpg",
+                            ImageURL = "/images/products/no-photo-placeholder.png",
                             Price = 29.99m,
-                            Title = "Lorem ipsum lingerie 6"
+                            Title = "Lorem ipsum bracelet 4"
                         });
+                });
+
+            modelBuilder.Entity("Klavelvet.Shared.Models.Product", b =>
+                {
+                    b.HasOne("Klavelvet.Shared.Models.Category", "Category")
+                        .WithMany()
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Category");
                 });
 #pragma warning restore 612, 618
         }

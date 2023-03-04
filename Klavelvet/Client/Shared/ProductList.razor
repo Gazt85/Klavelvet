@@ -1,6 +1,8 @@
-﻿@if (ProductService.Products == null || ProductService.Products.Count == 0)
+﻿@using Klavelvet.I18N.Product;
+
+@if (ProductService.Products == null || ProductService.Products.Count == 0)
 {
-    <span>Loading Products...</span>
+    <span>@ProductResources.LoadingPoducts</span>
 }
 else
 {

@@ -10,21 +10,25 @@ namespace Klavelvet.Server.Repository.ProductRepository
         public ProductRepository(DataContext context) : base(context)
         { }
 
-        public async Task<Product> GetProductAsync(Guid id, bool trackChanges) =>
-              await FindByCondition(p => p.Id.Equals(id), trackChanges)
-            .SingleOrDefaultAsync();
-
-
-        public async Task<ServiceResponse<List<Product>>> GetProductsAsync(bool trackChanges)
+        public async Task<List<Product>> GetProductsAsync(bool trackChanges)
         {
             var products = await FindAll(trackChanges).ToListAsync();
 
-            var response = new ServiceResponse<List<Product>>()
-            {
-                Data = products
-            };
+            return products;
+        }
 
-            return response;
-        }              
+        public async Task<List<Product>> GetProductsByCategoryAsync(string categoryUrl, bool trackChanges)
+        {
+            var products = await FindAllWithNavigation(p => p.Category, trackChanges);
+
+            var productsByCategory = products.Where(p => p.Category.Url.Equals(categoryUrl, StringComparison.OrdinalIgnoreCase));
+
+            return productsByCategory.ToList();
+        }
+
+        public async Task<Product> GetProductAsync(Guid id, bool trackChanges)
+            => await FindByCondition(p => p.Id.Equals(id), trackChanges)
+        .SingleOrDefaultAsync();
+
     }
 }
