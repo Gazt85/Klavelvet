@@ -95,5 +95,14 @@ namespace Klavelvet.I18N.Product {
                 return ResourceManager.GetString("Price", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Desde.
+        /// </summary>
+        public static string StartingAt {
+            get {
+                return ResourceManager.GetString("StartingAt", resourceCulture);
+            }
+        }
     }
 }

@@ -1,42 +1,67 @@
 ﻿@page "/product/{id:guid}"
 @using Klavelvet.I18N.Product;
+@using Klavelvet.Shared.Data_Transfer_Objects.ProductVariant;
 
 
 @if (@Product == null)
 {
-<span>@ProductResources.LoadingProduct</span>
+    <span>@ProductResources.LoadingProduct</span>
 }
 else
 {
+    ProductVariantDto selectedVariant = GetSelectedVariant();    
     <div class="card">
-    <div class="card-body">
-        <div class="row">
-            <div class="col">
-                <h2>@Product.Title</h2>
+        <div class="card-body">
+            <div class="row">
+                <div class="col">
+                    <h2>@Product.Title</h2>
+                </div>
             </div>
-        </div>
-        <div class="row">
-            <div class="col-md-4">
+            <div class="row">
+                <div class="col-md-4">
                     <img class="product-image" src="@Product.ImageURL" alt="@Product.Title" />
-            </div>
-            <div class="col-md-8">
-                <div class="row">
-                    <div class="col">
-                        <h3 class="price">@ProductResources.Price: @Product.Price</h3>
-                    </div>
                 </div>
-                <div class="row">
-                    <div class="col">
-                        <span class="product-description">
-                            @Product.Description
-                        </span>
+                <div class="col-md-8">
+                    <div class="row">
+                        <div class="col">
+                            @if (selectedVariant != null)
+                            {
+                                if (selectedVariant.OriginalPrice > selectedVariant.Price)
+                                {
+                                    <h6 class="text-muted original-price">
+                                        $@selectedVariant.OriginalPrice
+                                    </h6>
+                                }
+                                <h4 class="price">
+                                    $@selectedVariant.Price
+                                </h4>
+                            }
+                        </div>
                     </div>
-                </div>
+                    <div class="row">
+                        <div class="col">
+                            <span class="product-description">
+                                @Product.Description
+                            </span>
+                            @if (Product.Variants != null && Product.Variants.Count > 1)
+                            {
+                                <div class="mb-3 mt-3">
+                                    <select class="form-select" @bind=currentTypeId>
+                                        @foreach (var variant in Product.Variants)
+                                        {
+                                            <option value="@variant.ProductTypeId">@variant.ProductType?.Name</option>
+                                        }
+                                    </select>
+                                </div>
+
+                            }
+                        </div>
+                    </div>
+                </div>                                 
             </div>
         </div>
     </div>
-</div>
-<br />
+    <br />
 }
 
 

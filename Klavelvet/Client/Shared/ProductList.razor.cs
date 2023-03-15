@@ -10,9 +10,21 @@ namespace Klavelvet.Client.Shared
 
         protected override void OnInitialized()
         {
-            //await ProductService.GetProducts();
             ProductService.ProductsChanged += StateHasChanged;
+        }
 
+        private string GetPriceText(ProductDto product)
+        {
+            var variants = product.Variants;
+
+            if(!variants.Any())            
+                return string.Empty;
+
+            if (variants.Count == 1)
+                return $"{variants[0].Price}";
+
+            decimal minPrice = variants.Min(x => x.Price);
+            return $"{I18N.Product.ProductResources.StartingAt} ${minPrice}";
         }
 
         public void Dispose()

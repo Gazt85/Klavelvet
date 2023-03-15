@@ -6,5 +6,7 @@ namespace Contracts.CategoryContracts
     {
         Task<List<Category>> GetCategoriesAsync(bool trackChanges);
 
+        Task<Category> GetCategoryByUrl(string categoryUrl ,bool trackChanges);
+
     }
 }

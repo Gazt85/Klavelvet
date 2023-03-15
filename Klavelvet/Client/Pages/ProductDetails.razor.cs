@@ -1,5 +1,5 @@
 ﻿using Klavelvet.Client.Services.ProductService;
-using Klavelvet.Shared.Data_Transfer_Objects.Products;
+using Klavelvet.Shared.Data_Transfer_Objects.ProductVariant;
 using Microsoft.AspNetCore.Components;
 using Klavelvet.I18N;
 
@@ -9,11 +9,12 @@ namespace Klavelvet.Client.Pages
     {
         [Inject]
         IProductService ProductService { get; set; }
+        private int currentTypeId = 1;
 
         [Parameter]
         public Guid Id { get; set; }
 
-        private ProductDto Product = null;      
+        private ProductDto? Product;      
 
         protected override async Task OnParametersSetAsync()
         {
@@ -22,7 +23,16 @@ namespace Klavelvet.Client.Pages
             if(result != null)
             {
                 Product = result;
+
+                if (Product.Variants.Any())
+                {
+                    currentTypeId = Product.Variants[0].ProductTypeId;
+                }
             }
         }
+
+        private ProductVariantDto GetSelectedVariant()        
+            => Product.Variants.SingleOrDefault(v => v.ProductTypeId == currentTypeId);
+        
     }
 }

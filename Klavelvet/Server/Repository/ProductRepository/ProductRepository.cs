@@ -12,23 +12,24 @@ namespace Klavelvet.Server.Repository.ProductRepository
 
         public async Task<List<Product>> GetProductsAsync(bool trackChanges)
         {
-            var products = await FindAll(trackChanges).ToListAsync();
+            var products = await FindAllWithNavigation(p => p.Variants, trackChanges);
 
-            return products;
+            return products.ToList();
         }
 
         public async Task<List<Product>> GetProductsByCategoryAsync(string categoryUrl, bool trackChanges)
         {
-            var products = await FindAllWithNavigation(p => p.Category, trackChanges);
+            var productsWithCategories = await FindAllWithNavigation(p => p.Category, trackChanges);
 
-            var productsByCategory = products.Where(p => p.Category.Url.Equals(categoryUrl, StringComparison.OrdinalIgnoreCase));
+            var productsWithVariants = await FindAllWithNavigation(p => p.Variants, trackChanges);           
+
+            var productsByCategory = productsWithVariants.Where(p => p.Category.Url.Equals(categoryUrl, StringComparison.OrdinalIgnoreCase));
 
             return productsByCategory.ToList();
         }
 
         public async Task<Product> GetProductAsync(Guid id, bool trackChanges)
-            => await FindByCondition(p => p.Id.Equals(id), trackChanges)
-        .SingleOrDefaultAsync();
+        => await FindWithMultipleNavigationPropertiesAsync(p => p.Variants, v => v.ProductType, p => p.Id == id, trackChanges);      
 
     }
 }
