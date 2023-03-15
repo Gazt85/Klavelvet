@@ -123,6 +123,9 @@
   <data name="Corsets" xml:space="preserve">
     <value>Corsets</value>
   </data>
+  <data name="Dresses" xml:space="preserve">
+    <value>Dresses</value>
+  </data>
   <data name="Lingerie" xml:space="preserve">
     <value>Lingerie</value>
   </data>

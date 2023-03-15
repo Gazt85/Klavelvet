@@ -43,6 +43,14 @@ namespace Klavelvet.Server.Controllers
         [HttpGet("category/{categoryUrl}")]
         public async Task<ActionResult<List<ProductDto>>> GetProductsByCategory(string categoryUrl)
         {
+            var category = await _repositoryManager.Category.GetCategoryByUrl(categoryUrl,trackChanges: false);
+
+            if (category == null)
+            {
+                _loggerService.LogError($"Category with url {categoryUrl} doesn't exists in the database.");
+                return NotFound();
+            }
+
             var products = await _repositoryManager.Product.GetProductsByCategoryAsync(categoryUrl, trackChanges: false);
 
             if (products == null)

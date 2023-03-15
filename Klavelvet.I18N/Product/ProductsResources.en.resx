@@ -129,4 +129,7 @@
   <data name="Price" xml:space="preserve">
     <value>Price</value>
   </data>
+  <data name="StartingAt" xml:space="preserve">
+    <value>Starting at</value>
+  </data>
 </root>

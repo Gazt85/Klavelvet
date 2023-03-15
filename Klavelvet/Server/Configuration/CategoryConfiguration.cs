@@ -17,9 +17,9 @@ namespace Klavelvet.Server.Configuration
                  new Category
                  {
                      Id = 2,
-                     Name = "Lingerie",
+                     Name = "Dresses",
                      Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-                     Url = "lingerie"
+                     Url = "dresses"
                  },
                   new Category
                   {

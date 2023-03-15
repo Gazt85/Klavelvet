@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Klavelvet.Shared.Data_Transfer_Objects.ProductVariant;
 
 namespace Klavelvet.Shared.Data_Transfer_Objects.Products
 {
@@ -16,8 +12,8 @@ namespace Klavelvet.Shared.Data_Transfer_Objects.Products
 
         public string ImageURL { get; set; } = string.Empty;
 
-        public decimal Price { get; set; }
-
         public int CategoryId { get; set; }
+
+        public List<ProductVariantDto>? Variants { get; set; } = new();
     }
 }

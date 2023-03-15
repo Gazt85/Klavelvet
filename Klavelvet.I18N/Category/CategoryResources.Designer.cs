@@ -79,6 +79,15 @@ namespace Klavelvet.I18N.Category {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Vestidos.
+        /// </summary>
+        public static string Dresses {
+            get {
+                return ResourceManager.GetString("Dresses", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Lencería.
         /// </summary>
         public static string Lingerie {

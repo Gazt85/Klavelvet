@@ -17,5 +17,9 @@ namespace Klavelvet.Server.Repository.CategoryRepository
 
             return categories;
         }
+
+        public async Task<Category> GetCategoryByUrl(string cateogryUrl, bool trackChanges)
+        => await FindByCondition(p => p.Url.Equals(cateogryUrl), trackChanges)
+      .SingleOrDefaultAsync();  
     }
 }

@@ -10,14 +10,13 @@ namespace Klavelvet.Shared.Models
 
         public string Description { get; set; } = string.Empty;
 
-        public string ImageURL { get; set; } = string.Empty;
-
-        [Column(TypeName ="decimal(18,2)")]
-        public decimal Price { get; set; }
+        public string ImageURL { get; set; } = string.Empty;      
 
         public Category? Category { get; set; }
 
         public int CategoryId { get; set; }
+
+        public List<ProductVariant> Variants { get; set; } = new List<ProductVariant>();
 
     }
 }

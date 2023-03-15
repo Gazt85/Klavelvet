@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Klavelvet.Shared.Data_Transfer_Objects.Category
+﻿namespace Klavelvet.Shared.Data_Transfer_Objects.Category
 {
     public class CategoryDto
     {
