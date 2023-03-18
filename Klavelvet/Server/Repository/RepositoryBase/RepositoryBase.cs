@@ -50,6 +50,36 @@ namespace Klavelvet.Server.Repository.RepositoryBase
 
 
         /// <summary>
+        /// Finds and returns a queryable collection of entities of type T based on the given condition expression and a navigation property.
+        /// </summary>
+        /// <param name="expresion">The expression that defines the condition to be satisfied by the entities.</param>
+        /// <param name="navigationPropertyPath">The navigation property path to be included in the query results.</param>
+        /// <param name="trackChanges">A boolean value indicating whether or not changes to the entities should be tracked.</param>
+        /// <returns>An IQueryable collection of entities of type T.</returns>
+        /// <remarks>
+        /// This method returns an IQueryable collection of entities of type T based on the given condition expression and a navigation property.
+        /// If the 'trackChanges' parameter is set to false, the returned entities will not be tracked, otherwise changes to the entities will be tracked.
+        /// </remarks>
+        public async Task<IEnumerable<T>> FindByConditionAndNavigation(Expression<Func<T, bool>> expresion,
+            Expression<Func<T, object>> navigationPropertyPath,
+            bool trackChanges)
+        {
+            IQueryable<T> query = Datacontext.Set<T>();
+
+            if (trackChanges)
+            {
+                query = query.AsNoTracking();
+            }
+
+            var result = query.Where(expresion)
+                              .Include(navigationPropertyPath);
+
+            return await result.ToListAsync();
+
+        }
+
+
+        /// <summary>
         /// Retrieves a single entity of type <typeparamref name="T"/> from the database, including related entities using the specified navigation property paths.
         /// </summary>
         /// <typeparam name="T">The type of entity to retrieve.</typeparam>
@@ -79,7 +109,7 @@ namespace Klavelvet.Server.Repository.RepositoryBase
                                      .SingleOrDefaultAsync(expresion);
 
             return result;
-        }       
+        }
 
         /// <summary>
         /// Gets all entities with the specified navigation property eagerly loaded.

@@ -126,8 +126,14 @@
   <data name="LoadingProduct" xml:space="preserve">
     <value>Cargando Producto...</value>
   </data>
+  <data name="NoProductsFound" xml:space="preserve">
+    <value>No se ecnontraron productos</value>
+  </data>
   <data name="Price" xml:space="preserve">
     <value>Precio</value>
+  </data>
+  <data name="Search" xml:space="preserve">
+    <value>Búsqueda...</value>
   </data>
   <data name="StartingAt" xml:space="preserve">
     <value>Desde</value>

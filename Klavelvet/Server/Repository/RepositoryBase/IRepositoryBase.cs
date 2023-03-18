@@ -27,5 +27,6 @@ namespace Klavelvet.Server.Repository.RepositoryBase
 
         /// <inheritdoc cref="RepositoryBase.RepositoryBase{T}.FindWithMultipleNavigationPropertiesAsync{TProp1, TProp2}(Expression{Func{T, IEnumerable{TProp1}}}, Expression{Func{TProp1, TProp2}}, Expression{Func{T, bool}}, bool)" /> 
         Task<T> FindWithMultipleNavigationPropertiesAsync<TProp1, TProp2>(Expression<Func<T, IEnumerable<TProp1>>> navigationPropertyPath, Expression<Func<TProp1, TProp2>> navigationPropertyPath2, Expression<Func<T, bool>> expresion, bool trackChanges);
+        Task<IEnumerable<T>> FindByConditionAndNavigation(Expression<Func<T, bool>> expresion, Expression<Func<T, object>> navigationPropertyPath, bool trackChanges);
     }
 }

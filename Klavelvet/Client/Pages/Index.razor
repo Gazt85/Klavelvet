@@ -1,4 +1,5 @@
 ﻿@page "/"
+@page "/search/{searchText}"
 @page "/{cateogryUrl}"
 
 @using Klavelvet.Client.Services.ProductService;
@@ -6,14 +7,25 @@
 
 <PageTitle>Klavelvet</PageTitle>
 
-<ProductList/>
+<ProductList />
 
-@code{
+@code {
     [Parameter]
-    public string? CateogryUrl { get; set; }
+    public string? CateogryUrl { get; set; } = string.Empty;
+
+    [Parameter]
+    public string? SearchText { get; set; } = string.Empty;
 
     protected override async Task OnParametersSetAsync()
     {
-        await ProductService.GetProducts(CateogryUrl);
+        if (!string.IsNullOrEmpty(SearchText))
+        {
+            await ProductService.SearchProducts(SearchText);
+        }
+        else
+        {
+            await ProductService.GetProducts(CateogryUrl);
+        }
+
     }
 }

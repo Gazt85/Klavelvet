@@ -13,9 +13,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LoggerService", "LoggerServ
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Contracts", "Contracts\Contracts.csproj", "{E405A441-7BF5-479B-93C3-B7324C149685}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Klavelvet.I18N", "Klavelvet.I18N\Klavelvet.I18N.csproj", "{C4C1DB49-50F1-4555-998E-F6A7CD1DEDE2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Klavelvet.I18N", "Klavelvet.I18N\Klavelvet.I18N.csproj", "{C4C1DB49-50F1-4555-998E-F6A7CD1DEDE2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Klavelvet.Exceptions", "Klavelvet.Exceptions\Klavelvet.Exceptions.csproj", "{366D6FA9-8C35-41A2-AA28-11104F716F18}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Klavelvet.Exceptions", "Klavelvet.Exceptions\Klavelvet.Exceptions.csproj", "{366D6FA9-8C35-41A2-AA28-11104F716F18}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
