@@ -1,15 +1,24 @@
-﻿using Klavelvet.Shared.Data_Transfer_Objects.Products;
-
-namespace Klavelvet.Client.Services.ProductService
+﻿namespace Klavelvet.Client.Services.ProductService
 {
     public interface IProductService
     {
-        event Action ProductsChanged;
-
-        List<ProductDto> Products { get; set; }
+        Task<ProductDto> GetProduct(Guid id);
 
         Task GetProducts(string? categoryUrl = null);
 
-        Task<ProductDto> GetProduct(Guid id);
+        Task <List<string>> GetProductSearchSuggestions(string searchText);
+
+        string Message { get; set; }
+
+        List<ProductDto> Products { get; set; }
+
+        event Action ProductsChanged;
+
+        Task SearchProducts(string searchText);
+        
+
+        
+
+        
     }
 }

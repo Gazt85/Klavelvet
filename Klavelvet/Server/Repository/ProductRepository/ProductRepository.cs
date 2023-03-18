@@ -1,7 +1,4 @@
 ﻿using Klavelvet.Server.Repository.RepositoryBase;
-using Klavelvet.Shared.Models;
-using Microsoft.AspNetCore.Http.HttpResults;
-using Microsoft.EntityFrameworkCore;
 
 namespace Klavelvet.Server.Repository.ProductRepository
 {
@@ -29,7 +26,35 @@ namespace Klavelvet.Server.Repository.ProductRepository
         }
 
         public async Task<Product> GetProductAsync(Guid id, bool trackChanges)
-        => await FindWithMultipleNavigationPropertiesAsync(p => p.Variants, v => v.ProductType, p => p.Id == id, trackChanges);      
+        => await FindWithMultipleNavigationPropertiesAsync(p => p.Variants, v => v.ProductType, p => p.Id == id, trackChanges);
 
+        public async Task<List<Product>> SearchProducts(string searchText, bool trackChanges)
+        {
+            searchText = searchText.Trim().ToLower();
+
+            var products = await FindByConditionAndNavigation(p => p.Title.Contains(searchText)
+            || p.Description.Contains(searchText), p => p.Variants, trackChanges);
+
+            return products.ToList();            
+        }
+
+        public async Task<List<string>> SearchProductsWithSuggestions(string searchText, bool trackChanges)
+        {
+            searchText = searchText.Trim().ToLower();
+
+            var products = await SearchProducts(searchText, trackChanges);
+
+            var result = new List<string>();
+
+            foreach (var product in products)
+            {
+                if(product.Title.Contains(searchText, StringComparison.OrdinalIgnoreCase))
+                {
+                    result.Add(product.Title);
+                }
+            }
+
+            return result;
+        }
     }
-}
+    }

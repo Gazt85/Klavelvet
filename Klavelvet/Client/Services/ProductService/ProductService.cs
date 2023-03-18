@@ -1,6 +1,6 @@
 ﻿using Klavelvet.Client.Features;
-using Klavelvet.Shared.Data_Transfer_Objects.Products;
 using Microsoft.AspNetCore.Components;
+using System.Net.Http.Json;
 using System.Text.Json;
 
 namespace Klavelvet.Client.Services.ProductService
@@ -21,6 +21,7 @@ namespace Klavelvet.Client.Services.ProductService
             _unsuccessfulStatusCodeHandler = new UnsuccessfulStatusCodeHandler(navigationManager);
         }
         public List<ProductDto> Products { get; set; } = new();
+        public string Message { get; set; } = I18N.Product.ProductResources.LoadingPoducts;
 
         public async Task GetProducts(string? categoryUrl = null)
         {
@@ -44,6 +45,24 @@ namespace Klavelvet.Client.Services.ProductService
             _unsuccessfulStatusCodeHandler.HandleStatusCode(response);
 
             return JsonSerializer.Deserialize<ProductDto>(content, _options);
-        }       
+        }
+
+        public async Task<List<string>> GetProductSearchSuggestions(string searchText)
+            => await _httpClient
+            .GetFromJsonAsync<List<string>>($"api/products/searchsuggestions/{searchText}") ?? new List<string>();
+
+        public async Task SearchProducts(string searchText)
+        {
+            var response = await _httpClient
+                .GetFromJsonAsync<List<ProductDto>>($"api/products/search/{searchText}");
+
+            if (response != null)
+                Products = response;
+
+            if (!Products.Any())
+                Message = I18N.Product.ProductResources.NoProductsFound;
+
+            ProductsChanged?.Invoke();
+        }
     }
 }

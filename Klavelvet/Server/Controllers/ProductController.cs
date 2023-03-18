@@ -64,6 +64,24 @@ namespace Klavelvet.Server.Controllers
             return Ok(productsDto);
         }
 
+        [HttpGet("search/{searchText}")]
+        public async Task<ActionResult<List<ProductDto>>> SearchProducts(string searchText)
+        {           
+            var products = await _repositoryManager.Product.SearchProducts(searchText, trackChanges: false);                                       
+
+            var productsDto = _mapper.Map<IEnumerable<ProductDto>>(products).ToList();
+
+            return Ok(productsDto);
+        }
+
+        [HttpGet("searchsuggestions/{searchText}")]
+        public async Task<ActionResult<List<ProductDto>>> SearchProductsWithSuggestions(string searchText)
+        {
+            var suggestions = await _repositoryManager.Product.SearchProductsWithSuggestions(searchText, trackChanges: false);            
+
+            return Ok(suggestions);
+        }
+
         [HttpGet("{productId}")]
         public async Task<ActionResult<ProductDto>> GetProduct(Guid productId)
         {
