@@ -1,4 +1,5 @@
-﻿using Klavelvet.Client.Services.ProductService;
+﻿using Klavelvet.Client.Features;
+using Klavelvet.Client.Services.ProductService;
 using Microsoft.AspNetCore.Components;
 
 namespace Klavelvet.Client.Shared
@@ -7,6 +8,8 @@ namespace Klavelvet.Client.Shared
     {
         [Inject]
         public IProductService ProductService { get; set; }
+
+        public PagingResponse<ProductDto> ProductsList { get; set; } = new();
 
         protected override void OnInitialized()
         {
