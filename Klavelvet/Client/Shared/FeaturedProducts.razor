@@ -1,0 +1,32 @@
+﻿@using I18N.Product;
+
+<center><h2>@ProductResources.TopProductsOfThe_Day</h2></center>
+@if (ProductService.ProductResponse.Items == null || ProductService.ProductResponse.Items.Any() == false)
+{
+    <span>@ProductService.Message</span>
+}
+else
+{
+    <div class="container">
+        @foreach (var product in ProductService.ProductResponse.Items)
+        {
+            @if (product.Featured)
+            {
+                <div class="featured-product">
+                    <div>
+                        <a href="product/@product.Id">
+                            <img src="@product.ImageURL">
+                        </a>
+                    </div>                
+                <h4><a href="product/@product.Id">@product.Title</a></h4>
+                @if (product.Variants != null && product.Variants.Any())
+                {
+                    <h5 class="price">
+                        $@product.Variants[0].Price
+                    </h5>
+                }
+                </div>
+            }
+        }
+    </div>
+}

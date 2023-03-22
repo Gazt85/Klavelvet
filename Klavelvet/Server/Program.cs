@@ -23,6 +23,14 @@ builder.Services.AddDbContext<DataContext>(options =>
 
 LogManager.LoadConfiguration(string.Concat(Directory.GetCurrentDirectory(), "/nlog.config"));
 
+builder.Services.AddCors(policy =>
+{
+    policy.AddPolicy("CorsPolicy", opt => opt
+    .AllowAnyOrigin()
+    .AllowAnyHeader()
+    .AllowAnyMethod()
+    .WithExposedHeaders("X-Pagination"));
+}); 
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();

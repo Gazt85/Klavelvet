@@ -13,6 +13,11 @@ namespace Klavelvet.Client.Shared
             ProductService.ProductsChanged += StateHasChanged;
         }
 
+        private async Task SelectedPage(int page)
+        {
+            //ProductService.ProductResponse.Metadata.pa
+        }
+
         private string GetPriceText(ProductDto product)
         {
             var variants = product.Variants;

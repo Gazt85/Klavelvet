@@ -24,5 +24,9 @@
     <ProjectReference Include="..\Shared\Klavelvet.Shared.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Paging\" />
+  </ItemGroup>
+
 
 </Project>

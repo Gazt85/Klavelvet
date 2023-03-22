@@ -12,6 +12,8 @@ namespace Klavelvet.Shared.Data_Transfer_Objects.Products
 
         public string ImageURL { get; set; } = string.Empty;
 
+        public bool Featured { get; set; } = false;
+
         public int CategoryId { get; set; }
 
         public List<ProductVariantDto>? Variants { get; set; } = new();

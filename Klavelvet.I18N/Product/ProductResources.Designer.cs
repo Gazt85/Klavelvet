@@ -122,5 +122,14 @@ namespace Klavelvet.I18N.Product {
                 return ResourceManager.GetString("StartingAt", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Productos destacados de hoy.
+        /// </summary>
+        public static string TopProductsOfThe_Day {
+            get {
+                return ResourceManager.GetString("TopProductsOfThe Day", resourceCulture);
+            }
+        }
     }
 }

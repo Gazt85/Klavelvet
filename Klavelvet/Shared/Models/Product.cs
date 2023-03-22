@@ -10,7 +10,9 @@ namespace Klavelvet.Shared.Models
 
         public string Description { get; set; } = string.Empty;
 
-        public string ImageURL { get; set; } = string.Empty;      
+        public string ImageURL { get; set; } = string.Empty;  
+        
+        public bool Featured { get; set; } = false;
 
         public Category? Category { get; set; }
 
