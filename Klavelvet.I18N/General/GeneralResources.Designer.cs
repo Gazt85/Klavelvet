@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Klavelvet.I18N.Product {
+namespace Klavelvet.I18N.General {
     using System;
     
     
@@ -22,14 +22,14 @@ namespace Klavelvet.I18N.Product {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class ProductResources {
+    public class GeneralResources {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal ProductResources() {
+        internal GeneralResources() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace Klavelvet.I18N.Product {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Klavelvet.I18N.Product.ProductResources", typeof(ProductResources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Klavelvet.I18N.General.GeneralResources", typeof(GeneralResources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,74 +61,20 @@ namespace Klavelvet.I18N.Product {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Volver.
+        ///   Looks up a localized string similar to Siguiente.
         /// </summary>
-        public static string Back {
+        public static string Next {
             get {
-                return ResourceManager.GetString("Back", resourceCulture);
+                return ResourceManager.GetString("Next", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Cargando Productos....
+        ///   Looks up a localized string similar to Anterior.
         /// </summary>
-        public static string LoadingPoducts {
+        public static string Previous {
             get {
-                return ResourceManager.GetString("LoadingPoducts", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Cargando Producto....
-        /// </summary>
-        public static string LoadingProduct {
-            get {
-                return ResourceManager.GetString("LoadingProduct", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to No se ecnontraron productos.
-        /// </summary>
-        public static string NoProductsFound {
-            get {
-                return ResourceManager.GetString("NoProductsFound", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Precio.
-        /// </summary>
-        public static string Price {
-            get {
-                return ResourceManager.GetString("Price", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Búsqueda....
-        /// </summary>
-        public static string Search {
-            get {
-                return ResourceManager.GetString("Search", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Desde.
-        /// </summary>
-        public static string StartingAt {
-            get {
-                return ResourceManager.GetString("StartingAt", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Productos destacados.
-        /// </summary>
-        public static string TopProductsOfThe_Day {
-            get {
-                return ResourceManager.GetString("TopProductsOfThe Day", resourceCulture);
+                return ResourceManager.GetString("Previous", resourceCulture);
             }
         }
     }

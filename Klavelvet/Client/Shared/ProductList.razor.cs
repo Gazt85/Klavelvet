@@ -4,22 +4,13 @@ using Microsoft.AspNetCore.Components;
 
 namespace Klavelvet.Client.Shared
 {
-    public partial class ProductList : IDisposable
+    public partial class ProductList 
     {
         [Inject]
         public IProductService ProductService { get; set; }
 
-        public PagingResponse<ProductDto> ProductsList { get; set; } = new();
-
-        protected override void OnInitialized()
-        {
-            ProductService.ProductsChanged += StateHasChanged;
-        }
-
-        private async Task SelectedPage(int page)
-        {
-            //ProductService.ProductResponse.Metadata.pa
-        }
+        [Parameter]
+        public List<ProductDto> Products { get; set; } = new();
 
         private string GetPriceText(ProductDto product)
         {
@@ -33,11 +24,6 @@ namespace Klavelvet.Client.Shared
 
             decimal minPrice = variants.Min(x => x.Price);
             return $"{I18N.Product.ProductResources.StartingAt} ${minPrice}";
-        }
-
-        public void Dispose()
-        {
-            ProductService.ProductsChanged -= StateHasChanged;
-        }
+        }       
     }
 }

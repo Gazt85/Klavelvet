@@ -1,14 +1,15 @@
 ﻿@using I18N.Product;
 
 <center><h2>@ProductResources.TopProductsOfThe_Day</h2></center>
-@if (ProductService.ProductResponse.Items == null || ProductService.ProductResponse.Items.Any() == false)
+
+@if (Products == null || Products.Any() == false)
 {
     <span>@ProductService.Message</span>
 }
 else
 {
     <div class="container">
-        @foreach (var product in ProductService.ProductResponse.Items)
+        @foreach (var product in Products)
         {
             @if (product.Featured)
             {

@@ -2,21 +2,39 @@
 @page "/search/{searchText}"
 @page "/{categoryUrl}"
 
+@using Klavelvet.Client.Features;
 @using Klavelvet.Client.Services.ProductService;
 @using Klavelvet.Shared.RequestFeatures;
+@using Klavelvet.I18N.Product;
 @inject IProductService ProductService
 
 <PageTitle>Klavelvet</PageTitle>
 
-@if (string.IsNullOrEmpty(SearchText) && string.IsNullOrEmpty(CategoryUrl))
+@if (ProductsList.Any())
 {
-    <FeaturedProducts />
+    if (string.IsNullOrEmpty(SearchText) && string.IsNullOrEmpty(CategoryUrl))
+    {
+        <FeaturedProducts Products="ProductsList" />
+    }
+    else
+    {
+        <ProductList Products="ProductsList" />
+    }
+
+
+    <div class="row">
+        <div class="col-2">
+            <Pagination Metadata="Metadata" Spread="1" SelectedPage="SelectedPage" />
+        </div>
+        <div class="col-2 page-size-dropdown">
+            <PageSizeDropDown SelectedPageSize="SetPageSize" />
+        </div>
+    </div>
 }
 else
 {
-    <ProductList />
+    <span>@ProductResources.LoadingPoducts</span>
 }
-
 
 
 @code {
@@ -26,18 +44,48 @@ else
     [Parameter]
     public string? SearchText { get; set; } = string.Empty;
 
+    public List<ProductDto> ProductsList { get; set; } = new();
+
+    public Metadata Metadata { get; set; } = new Metadata();
+
     private ProductParameters _productParameters = new ProductParameters();
 
-    protected override async Task OnParametersSetAsync()
+    protected async override Task OnParametersSetAsync()
     {
+        GetProducts();
+    }
+
+
+    private async Task SelectedPage(int page)
+    {
+        _productParameters.PageNumber = page;
+        await GetProducts();
+    }
+
+    private async Task SetPageSize(int pageSize)
+    {
+        _productParameters.PageSize = pageSize;
+        _productParameters.PageNumber = 1;
+
+        await GetProducts();
+    }
+
+    private async Task GetProducts()
+    {
+        var pagingResponse = new PagingResponse<ProductDto>();
+
         if (!string.IsNullOrEmpty(SearchText))
         {
-            await ProductService.SearchProducts(_productParameters,SearchText);
+            pagingResponse = await ProductService.SearchProducts(_productParameters, SearchText);
         }
         else
         {
-            await ProductService.GetProducts(_productParameters,CategoryUrl);
+            pagingResponse = await ProductService.GetProducts(_productParameters, CategoryUrl);
         }
 
+        Metadata = pagingResponse.Metadata;
+        ProductsList = pagingResponse.Items;
+
+        StateHasChanged();
     }
 }

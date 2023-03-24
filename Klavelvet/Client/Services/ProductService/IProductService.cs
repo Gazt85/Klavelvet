@@ -7,7 +7,7 @@ namespace Klavelvet.Client.Services.ProductService
     {
         Task<ProductDto> GetProduct(Guid id);
 
-        Task GetProducts(ProductParameters productsParameters, string? categoryUrl = null);
+        Task<PagingResponse<ProductDto>> GetProducts(ProductParameters productsParameters, string? categoryUrl = null);
 
         Task <List<string>> GetProductSearchSuggestions(string searchText);
 
@@ -17,7 +17,7 @@ namespace Klavelvet.Client.Services.ProductService
 
         event Action ProductsChanged;
 
-        Task SearchProducts(ProductParameters productsParameters,string searchText);
+        Task<PagingResponse<ProductDto>> SearchProducts(ProductParameters productsParameters,string searchText);
         
 
         

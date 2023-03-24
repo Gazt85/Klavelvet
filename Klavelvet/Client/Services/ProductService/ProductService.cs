@@ -26,11 +26,12 @@ namespace Klavelvet.Client.Services.ProductService
         public PagingResponse<ProductDto> ProductResponse { get; set; } = new();
         public string Message { get; set; } = I18N.Product.ProductResources.LoadingPoducts;
 
-        public async Task GetProducts(ProductParameters productsParameters, string? categoryUrl = null)
+        public async Task<PagingResponse<ProductDto>> GetProducts(ProductParameters productsParameters, string? categoryUrl = null)
         {
             var queryStringParam = new Dictionary<string, string>
             {
-                ["pageNumber"] = productsParameters.PageNumber.ToString()
+                ["pageNumber"] = productsParameters.PageNumber.ToString(),
+                ["pageSize"] = productsParameters.PageSize.ToString()
             };
 
             var response = categoryUrl == null ?
@@ -46,10 +47,7 @@ namespace Klavelvet.Client.Services.ProductService
                 Metadata = JsonSerializer.Deserialize<Metadata>(
                     response.Headers.GetValues("X-Pagination").First(), _options)
             };
-
-            ProductResponse = pagingResponse;
-
-            ProductsChanged.Invoke();
+            return pagingResponse;            
         }
 
         public async Task<ProductDto> GetProduct(Guid productId)
@@ -66,11 +64,12 @@ namespace Klavelvet.Client.Services.ProductService
             => await _httpClient
             .GetFromJsonAsync<List<string>>($"api/products/searchsuggestions/{searchText}") ?? new List<string>();
 
-        public async Task SearchProducts(ProductParameters productsParameters, string searchText)
+        public async Task<PagingResponse<ProductDto>> SearchProducts(ProductParameters productsParameters, string searchText)
         {
             var queryStringParam = new Dictionary<string, string>
             {
-                ["pageNumber"] = productsParameters.PageNumber.ToString()
+                ["pageNumber"] = productsParameters.PageNumber.ToString(),
+                ["pageSize"] = productsParameters.PageSize.ToString()
             };
 
             var response = await _httpClient
@@ -92,7 +91,7 @@ namespace Klavelvet.Client.Services.ProductService
             if (!pagingResponse.Items.Any())
                 Message = I18N.Product.ProductResources.NoProductsFound;
 
-            ProductsChanged?.Invoke();
+            return pagingResponse;
         }
     }
 }

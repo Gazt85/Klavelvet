@@ -3,19 +3,12 @@ using Microsoft.AspNetCore.Components;
 
 namespace Klavelvet.Client.Shared
 {
-    public partial class FeaturedProducts : IDisposable
+    public partial class FeaturedProducts
     {
         [Inject]
         public IProductService ProductService { get; set; }
 
-        protected override void OnInitialized()
-        {
-            ProductService.ProductsChanged += StateHasChanged;
-        }
-
-        public void Dispose()
-        {
-            ProductService.ProductsChanged -= StateHasChanged;
-        }
+        [Parameter]
+        public List<ProductDto> Products { get; set; } = new();       
     }
 }
