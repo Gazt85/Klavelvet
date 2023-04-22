@@ -14,7 +14,8 @@ namespace Klavelvet.Server.Configuration
                     Title = "Lorem ipsum corset 1",
                     Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed in massa purus. Fusce eleifend ullamcorper diam, vel dictum velit auctor vitae. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Praesent ultrices dolor sit amet lorem posuere, eget rhoncus ipsum euismod.",
                     ImageURL = "https://upload.wikimedia.org/wikipedia/commons/0/01/Corset1878taille46_300gram.png",                    
-                    CategoryId = 1
+                    CategoryId = 1,
+                    Featured = true
                 },
                 new Product
                 {
@@ -46,7 +47,8 @@ namespace Klavelvet.Server.Configuration
                     Title = "Lorem ipsum dress 1",
                     Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed in massa purus. Fusce eleifend ullamcorper diam, vel dictum velit auctor vitae. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Praesent ultrices dolor sit amet lorem posuere, eget rhoncus ipsum euismod.",
                     ImageURL = "/images/products/dresses/dress_1.jpg",
-                    CategoryId = 2
+                    CategoryId = 2,
+                    Featured = true
                 },
                 new Product
                 {
@@ -78,7 +80,8 @@ namespace Klavelvet.Server.Configuration
                     Title = "Lorem ipsum bracelet 1",
                     Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed in massa purus. Fusce eleifend ullamcorper diam, vel dictum velit auctor vitae. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Praesent ultrices dolor sit amet lorem posuere, eget rhoncus ipsum euismod.",
                     ImageURL = "/images/products/accesories/bracelet_1.png",
-                    CategoryId = 3
+                    CategoryId = 3,
+                    Featured = true
                 },
                 new Product
                 {

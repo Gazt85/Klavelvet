@@ -1,13 +1,14 @@
 ﻿@using Klavelvet.I18N.Product;
 
-@if (ProductService.Products == null || ProductService.Products.Count == 0)
+@if (Products == null ||
+!Products.Any())
 {
     <span>@ProductService.Message</span>
 }
 else
 {
     <ul class="list-unstyled">
-        @foreach (var product in ProductService.Products)
+        @foreach (var product in Products)
         {
             <li class="media my-3">
                 <div class="media-img-wrapper mr-2">
@@ -27,6 +28,8 @@ else
             </li>
         }
     </ul>
+    
+  
 }
 
 

@@ -1,5 +1,8 @@
 ﻿using Klavelvet.Client.Features;
+using Klavelvet.Shared.Models;
+using Klavelvet.Shared.RequestFeatures;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.WebUtilities;
 using System.Net.Http.Json;
 using System.Text.Json;
 
@@ -7,7 +10,7 @@ namespace Klavelvet.Client.Services.ProductService
 {
     public class ProductService : IProductService
     {
-        private readonly HttpClient _httpClient;
+        private readonly HttpClient _httpClient;        
         private UnsuccessfulStatusCodeHandler _unsuccessfulStatusCodeHandler;
 
         private readonly JsonSerializerOptions _options =
@@ -20,21 +23,31 @@ namespace Klavelvet.Client.Services.ProductService
             _httpClient = httpClient;
             _unsuccessfulStatusCodeHandler = new UnsuccessfulStatusCodeHandler(navigationManager);
         }
-        public List<ProductDto> Products { get; set; } = new();
+        public PagingResponse<ProductDto> ProductResponse { get; set; } = new();
         public string Message { get; set; } = I18N.Product.ProductResources.LoadingPoducts;
 
-        public async Task GetProducts(string? categoryUrl = null)
+        public async Task<PagingResponse<ProductDto>> GetProducts(ProductParameters productsParameters, string? categoryUrl = null)
         {
+            var queryStringParam = new Dictionary<string, string>
+            {
+                ["pageNumber"] = productsParameters.PageNumber.ToString(),
+                ["pageSize"] = productsParameters.PageSize.ToString()
+            };
+
             var response = categoryUrl == null ?
-                await _httpClient.GetAsync("api/products") :
-                await _httpClient.GetAsync($"api/products/category/{categoryUrl}");
+                 await _httpClient.GetAsync(QueryHelpers.AddQueryString("api/products/featured",queryStringParam)) :
+                await _httpClient.GetAsync(QueryHelpers.AddQueryString($"api/products/category/{categoryUrl}",queryStringParam));          
 
             var content = await response.Content.ReadAsStringAsync();
             _unsuccessfulStatusCodeHandler.HandleStatusCode(response);
 
-            Products = JsonSerializer.Deserialize<List<ProductDto>>(content, _options);
-
-            ProductsChanged.Invoke();
+            var pagingResponse = new PagingResponse<ProductDto>
+            {
+                Items = JsonSerializer.Deserialize<List<ProductDto>>(content, _options),
+                Metadata = JsonSerializer.Deserialize<Metadata>(
+                    response.Headers.GetValues("X-Pagination").First(), _options)
+            };
+            return pagingResponse;            
         }
 
         public async Task<ProductDto> GetProduct(Guid productId)
@@ -51,18 +64,34 @@ namespace Klavelvet.Client.Services.ProductService
             => await _httpClient
             .GetFromJsonAsync<List<string>>($"api/products/searchsuggestions/{searchText}") ?? new List<string>();
 
-        public async Task SearchProducts(string searchText)
+        public async Task<PagingResponse<ProductDto>> SearchProducts(ProductParameters productsParameters, string searchText)
         {
+            var queryStringParam = new Dictionary<string, string>
+            {
+                ["pageNumber"] = productsParameters.PageNumber.ToString(),
+                ["pageSize"] = productsParameters.PageSize.ToString()
+            };
+
             var response = await _httpClient
-                .GetFromJsonAsync<List<ProductDto>>($"api/products/search/{searchText}");
+                .GetAsync(QueryHelpers.AddQueryString($"api/products/search/{searchText}", queryStringParam));
 
-            if (response != null)
-                Products = response;
+            var content = await response.Content.ReadAsStringAsync();
+            _unsuccessfulStatusCodeHandler.HandleStatusCode(response);
 
-            if (!Products.Any())
+            var pagingResponse = new PagingResponse<ProductDto>
+            {
+                Items = JsonSerializer.Deserialize<List<ProductDto>>(content, _options),
+                Metadata = JsonSerializer.Deserialize<Metadata>(
+                   response.Headers.GetValues("X-Pagination").First(), _options)
+            };
+
+            if (pagingResponse != null)
+                ProductResponse = pagingResponse;
+
+            if (!pagingResponse.Items.Any())
                 Message = I18N.Product.ProductResources.NoProductsFound;
 
-            ProductsChanged?.Invoke();
+            return pagingResponse;
         }
     }
 }

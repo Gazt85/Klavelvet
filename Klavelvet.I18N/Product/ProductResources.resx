@@ -138,4 +138,7 @@
   <data name="StartingAt" xml:space="preserve">
     <value>Desde</value>
   </data>
+  <data name="TopProductsOfThe Day" xml:space="preserve">
+    <value>Productos destacados</value>
+  </data>
 </root>

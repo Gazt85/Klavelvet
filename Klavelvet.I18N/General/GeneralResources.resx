@@ -117,28 +117,10 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Back" xml:space="preserve">
-    <value>Back</value>
+  <data name="Next" xml:space="preserve">
+    <value>Siguiente</value>
   </data>
-  <data name="LoadingPoducts" xml:space="preserve">
-    <value>Loading Products...</value>
-  </data>
-  <data name="LoadingProduct" xml:space="preserve">
-    <value>Loading Product...</value>
-  </data>
-  <data name="NoProductsFound" xml:space="preserve">
-    <value>No Products Found</value>
-  </data>
-  <data name="Price" xml:space="preserve">
-    <value>Price</value>
-  </data>
-  <data name="Search" xml:space="preserve">
-    <value>Search...</value>
-  </data>
-  <data name="StartingAt" xml:space="preserve">
-    <value>Starting at</value>
-  </data>
-  <data name="TopProductsOfThe Day" xml:space="preserve">
-    <value>Top Products of the Day</value>
+  <data name="Previous" xml:space="preserve">
+    <value>Anterior</value>
   </data>
 </root>

@@ -3,7 +3,9 @@ using Contracts;
 using Klavelvet.Server.Repository.RepositoryManager;
 using Klavelvet.Shared.Data_Transfer_Objects.Products;
 using Klavelvet.Shared.Models;
+using Klavelvet.Shared.RequestFeatures;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 
 namespace Klavelvet.Server.Controllers
 {
@@ -25,9 +27,9 @@ namespace Klavelvet.Server.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<ProductDto>>> GetProducts()
+        public async Task<ActionResult<List<ProductDto>>> GetProducts([FromQuery] ProductParameters productParameters)
         {
-            var products = await _repositoryManager.Product.GetProductsAsync(trackChanges: false);
+            var products = await _repositoryManager.Product.GetProductsAsync(productParameters,trackChanges: false);
 
             if (products == null)
             {
@@ -37,11 +39,25 @@ namespace Klavelvet.Server.Controllers
 
             var productsDto = _mapper.Map<IEnumerable<ProductDto>>(products).ToList();
 
+            Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(products.Metadata));
+
+            return Ok(productsDto);
+        }
+
+        [HttpGet("featured")]
+        public async Task<ActionResult<List<ProductDto>>> GetFeaturedProducts([FromQuery] ProductParameters productParameters)
+        {
+            var products = await _repositoryManager.Product.GetFeaturedProductsAsync(productParameters,trackChanges: false);
+
+            var productsDto = _mapper.Map<IEnumerable<ProductDto>>(products).ToList();
+
+            Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(products.Metadata));
+
             return Ok(productsDto);
         }
 
         [HttpGet("category/{categoryUrl}")]
-        public async Task<ActionResult<List<ProductDto>>> GetProductsByCategory(string categoryUrl)
+        public async Task<ActionResult<List<ProductDto>>> GetProductsByCategory([FromQuery] ProductParameters productParameters,string categoryUrl)
         {
             var category = await _repositoryManager.Category.GetCategoryByUrl(categoryUrl,trackChanges: false);
 
@@ -51,7 +67,7 @@ namespace Klavelvet.Server.Controllers
                 return NotFound();
             }
 
-            var products = await _repositoryManager.Product.GetProductsByCategoryAsync(categoryUrl, trackChanges: false);
+            var products = await _repositoryManager.Product.GetProductsByCategoryAsync(productParameters,categoryUrl, trackChanges: false);
 
             if (products == null)
             {
@@ -61,15 +77,19 @@ namespace Klavelvet.Server.Controllers
 
             var productsDto = _mapper.Map<IEnumerable<ProductDto>>(products).ToList();
 
+            Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(products.Metadata));
+
             return Ok(productsDto);
         }
 
         [HttpGet("search/{searchText}")]
-        public async Task<ActionResult<List<ProductDto>>> SearchProducts(string searchText)
+        public async Task<ActionResult<List<ProductDto>>> SearchProducts([FromQuery] ProductParameters productParameters,string searchText)
         {           
-            var products = await _repositoryManager.Product.SearchProducts(searchText, trackChanges: false);                                       
+            var products = await _repositoryManager.Product.SearchProducts(productParameters,searchText, trackChanges: false);                                       
 
             var productsDto = _mapper.Map<IEnumerable<ProductDto>>(products).ToList();
+
+            Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(products.Metadata));
 
             return Ok(productsDto);
         }

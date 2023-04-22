@@ -17,6 +17,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>GeneralResources.resx</DependentUpon>
     </Compile>
+    <Compile Update="General\GeneralResources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>GeneralResources.resx</DependentUpon>
+    </Compile>
     <Compile Update="Product\ProductResources.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -36,6 +41,13 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Exception\GeneralResources.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>GeneralResources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="General\GeneralResources.en.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="General\GeneralResources.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>GeneralResources.Designer.cs</LastGenOutput>
     </EmbeddedResource>

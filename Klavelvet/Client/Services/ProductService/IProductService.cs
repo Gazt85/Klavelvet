@@ -1,20 +1,23 @@
-﻿namespace Klavelvet.Client.Services.ProductService
+﻿using Klavelvet.Client.Features;
+using Klavelvet.Shared.RequestFeatures;
+
+namespace Klavelvet.Client.Services.ProductService
 {
     public interface IProductService
     {
         Task<ProductDto> GetProduct(Guid id);
 
-        Task GetProducts(string? categoryUrl = null);
+        Task<PagingResponse<ProductDto>> GetProducts(ProductParameters productsParameters, string? categoryUrl = null);
 
         Task <List<string>> GetProductSearchSuggestions(string searchText);
 
         string Message { get; set; }
 
-        List<ProductDto> Products { get; set; }
+        PagingResponse<ProductDto> ProductResponse { get; set; }
 
         event Action ProductsChanged;
 
-        Task SearchProducts(string searchText);
+        Task<PagingResponse<ProductDto>> SearchProducts(ProductParameters productsParameters,string searchText);
         
 
         

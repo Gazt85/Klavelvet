@@ -1,14 +1,17 @@
-﻿namespace Klavelvet.Server.Repository.ProductRepository
+﻿using Klavelvet.Shared.RequestFeatures;
+
+namespace Klavelvet.Server.Repository.ProductRepository
 {
     public interface IProductRepository
     {
-        Task<List<Product>> GetProductsAsync(bool trackChanges);
+        Task<PagedList<Product>> GetFeaturedProductsAsync(ProductParameters productParameters,bool trackChanges);
+        Task<PagedList<Product>> GetProductsAsync(ProductParameters productParameters, bool trackChanges);
 
-        Task<List<Product>> GetProductsByCategoryAsync(string cateogryUrl,bool trackChanges);
+        Task<PagedList<Product>> GetProductsByCategoryAsync(ProductParameters productParameters, string cateogryUrl,bool trackChanges);
 
         Task<Product> GetProductAsync(Guid id, bool trackChanges);
 
-        Task<List<Product>> SearchProducts(string searchText, bool trackChanges);
+        Task<PagedList<Product>> SearchProducts(ProductParameters productParameters, string searchText, bool trackChanges);
 
         Task<List<string>> SearchProductsWithSuggestions(string searchText, bool trackChanges);
     }
