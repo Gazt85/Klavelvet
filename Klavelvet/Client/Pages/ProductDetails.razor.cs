@@ -1,7 +1,8 @@
-﻿using Klavelvet.Client.Services.ProductService;
+﻿using Contracts.CartContracts;
+using Klavelvet.Client.Services.ProductService;
+using Klavelvet.Shared.Data_Transfer_Objects.Cart;
 using Klavelvet.Shared.Data_Transfer_Objects.ProductVariant;
 using Microsoft.AspNetCore.Components;
-using Klavelvet.I18N;
 
 namespace Klavelvet.Client.Pages
 {
@@ -9,6 +10,10 @@ namespace Klavelvet.Client.Pages
     {
         [Inject]
         IProductService ProductService { get; set; }
+
+        [Inject]
+        ICartService CartService { get; set; }
+
         private int currentTypeId = 1;
 
         [Parameter]
@@ -34,5 +39,17 @@ namespace Klavelvet.Client.Pages
         private ProductVariantDto GetSelectedVariant()        
             => Product.Variants.SingleOrDefault(v => v.ProductTypeId == currentTypeId);
         
+        private async Task AddToCart()
+        {
+            var productVariant = GetSelectedVariant();
+
+            var cartItem = new CartItemDto
+            {
+                ProductId = productVariant.ProductId,
+                ProductTypeId = productVariant.ProductTypeId,
+            };
+
+            await CartService.AddToCart(cartItem);
+        }       
     }
 }
