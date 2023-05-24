@@ -1,0 +1,34 @@
+﻿@page "/cart"
+
+@*<PageTitle>@I18N.Cart.CartResources.ShoppingCart</PageTitle>*@
+<PageTitle>ShoppingCart</PageTitle>
+
+@if (CartItems == null || CartItems.Any() == false)
+{
+    <span>@Message</span>
+}
+else
+{
+    <div>
+        @foreach (var product in CartItems)
+        {
+            <div class="container">
+                <div class="image-wrapper">
+                    <img src="@product.ImageUrl" class="image" alt="@product.Title"/>
+                </div>
+                <div class="name"> 
+                    <h5><a href="/product/@product.ProductId">@product.Title</a></h5>
+                    <span>@product.ProductType</span><br>
+                    <input type="number" value="@product.Quantity"
+                    @onchange="@((ChangeEventArgs e) => UpdateQuantity(e, product))" min="1"/>
+                    <button class="btn-delete" @onclick="@(() => RemoveProductFromCart(product.ProductId, product.ProductTypeId))">@I18N.Cart.CartResources.Delete</button>
+                </div>
+                <div class="cart-product-price">$@(product.Price * product.Quantity)</div>
+            </div>
+        }
+        <div class="cart-product-price">
+            @I18N.Cart.CartResources.Total (@CartItems.Count) : $ @CartItems.Sum(p => p.Price * p.Quantity)
+        </div>
+    </div>
+
+}

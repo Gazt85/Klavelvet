@@ -1,6 +1,4 @@
-﻿using Klavelvet.Server.Data;
-using Microsoft.EntityFrameworkCore;
-using System.Linq.Expressions;
+﻿using System.Linq.Expressions;
 
 namespace Klavelvet.Server.Repository.RepositoryBase
 {

@@ -1,4 +1,5 @@
-﻿using Contracts.CategoryContracts;
+﻿using Contracts.CartContracts;
+using Contracts.CategoryContracts;
 using Klavelvet.Server.Repository.ProductRepository;
 
 namespace Klavelvet.Server.Repository.RepositoryManager
@@ -8,5 +9,7 @@ namespace Klavelvet.Server.Repository.RepositoryManager
         IProductRepository Product { get; }
 
         ICategoryRepository Category { get; }
+
+        ICartRepository Cart { get; }
     }
 }
