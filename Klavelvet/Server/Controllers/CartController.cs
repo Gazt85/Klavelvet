@@ -24,8 +24,13 @@ namespace Klavelvet.Server.Controllers
         [HttpPost("products")]
         public async Task<ActionResult<List<CartItemDto>>> GetCartProducts(List<CartItemForCreationDto> cartItems)
         {
-            var cartProducts = await _repositoryManager.Cart.GetCartProducts(cartItems,trackChanges: false);            
-           
+            if (cartItems == null || cartItems.Count == 0)
+            {
+                return NoContent();
+            }
+
+            var cartProducts = await _repositoryManager.Cart.GetCartProducts(cartItems, trackChanges: false);
+
             return Ok(cartProducts);
         }
     }

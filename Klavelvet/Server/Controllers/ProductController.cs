@@ -29,7 +29,7 @@ namespace Klavelvet.Server.Controllers
         [HttpGet]
         public async Task<ActionResult<List<ProductDto>>> GetProducts([FromQuery] ProductParameters productParameters)
         {
-            var products = await _repositoryManager.Product.GetProductsAsync(productParameters,trackChanges: false);
+            var products = await _repositoryManager.Product.GetProductsAsync(productParameters, trackChanges: false);
 
             if (products == null)
             {
@@ -39,7 +39,7 @@ namespace Klavelvet.Server.Controllers
 
             var productsDto = _mapper.Map<IEnumerable<ProductDto>>(products).ToList();
 
-            Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(products.Metadata));
+            Response?.Headers.Add("X-Pagination", JsonConvert.SerializeObject(products.Metadata));
 
             return Ok(productsDto);
         }
@@ -47,19 +47,24 @@ namespace Klavelvet.Server.Controllers
         [HttpGet("featured")]
         public async Task<ActionResult<List<ProductDto>>> GetFeaturedProducts([FromQuery] ProductParameters productParameters)
         {
-            var products = await _repositoryManager.Product.GetFeaturedProductsAsync(productParameters,trackChanges: false);
+            var products = await _repositoryManager.Product.GetFeaturedProductsAsync(productParameters, trackChanges: false);
+
+            if (products == null || products.Any() == false)
+            {
+                return NotFound();
+            }
 
             var productsDto = _mapper.Map<IEnumerable<ProductDto>>(products).ToList();
 
-            Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(products.Metadata));
+            Response?.Headers.Add("X-Pagination", JsonConvert.SerializeObject(products.Metadata));
 
             return Ok(productsDto);
         }
 
         [HttpGet("category/{categoryUrl}")]
-        public async Task<ActionResult<List<ProductDto>>> GetProductsByCategory([FromQuery] ProductParameters productParameters,string categoryUrl)
+        public async Task<ActionResult<List<ProductDto>>> GetProductsByCategory([FromQuery] ProductParameters productParameters, string categoryUrl)
         {
-            var category = await _repositoryManager.Category.GetCategoryByUrl(categoryUrl,trackChanges: false);
+            var category = await _repositoryManager.Category.GetCategoryByUrl(categoryUrl, trackChanges: false);
 
             if (category == null)
             {
@@ -67,7 +72,7 @@ namespace Klavelvet.Server.Controllers
                 return NotFound();
             }
 
-            var products = await _repositoryManager.Product.GetProductsByCategoryAsync(productParameters,categoryUrl, trackChanges: false);
+            var products = await _repositoryManager.Product.GetProductsByCategoryAsync(productParameters, categoryUrl, trackChanges: false);
 
             if (products == null)
             {
@@ -77,19 +82,24 @@ namespace Klavelvet.Server.Controllers
 
             var productsDto = _mapper.Map<IEnumerable<ProductDto>>(products).ToList();
 
-            Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(products.Metadata));
+            Response?.Headers.Add("X-Pagination", JsonConvert.SerializeObject(products.Metadata));
 
             return Ok(productsDto);
         }
 
         [HttpGet("search/{searchText}")]
-        public async Task<ActionResult<List<ProductDto>>> SearchProducts([FromQuery] ProductParameters productParameters,string searchText)
-        {           
-            var products = await _repositoryManager.Product.SearchProducts(productParameters,searchText, trackChanges: false);                                       
+        public async Task<ActionResult<List<ProductDto>>> SearchProducts([FromQuery] ProductParameters productParameters, string searchText)
+        {
+            var products = await _repositoryManager.Product.SearchProducts(productParameters, searchText, trackChanges: false);
 
             var productsDto = _mapper.Map<IEnumerable<ProductDto>>(products).ToList();
 
-            Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(products.Metadata));
+            if (productsDto == null || productsDto.Any() == false)
+            {
+                return NotFound();
+            }
+
+            Response?.Headers.Add("X-Pagination", JsonConvert.SerializeObject(products.Metadata));
 
             return Ok(productsDto);
         }
@@ -117,5 +127,6 @@ namespace Klavelvet.Server.Controllers
             return Ok(productDto);
 
         }
+
     }
 }
