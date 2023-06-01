@@ -37,13 +37,13 @@ namespace Klavelet.Tests.Cart
             var cartItems = new List<CartItemForCreationDto>
             {
                 new CartItemForCreationDto {
-                    ProductId = new Guid("6a063e94-37a5-4019-be3d-664dd453afa9"),
+                    ProductId = Guid.NewGuid(),
                     ProductTypeId = 3,
                     Quantity = 1                    
                 },
                 new CartItemForCreationDto
                 {
-                    ProductId = new Guid("df5b6339-e65b-488f-b837-b7434445ce54"),
+                    ProductId = new Guid(),
                     ProductTypeId = 3,
                     Quantity = 1
                 }
@@ -54,12 +54,12 @@ namespace Klavelet.Tests.Cart
                 // Create expected cart products
                 new CartItemDto 
                 {
-                    ProductId = new Guid("6a063e94-37a5-4019-be3d-664dd453afa9"),
+                    ProductId = Guid.NewGuid(),
                     ProductTypeId = 3
                 },
                 new CartItemDto 
                 {
-                    ProductId = new Guid("df5b6339-e65b-488f-b837-b7434445ce54"),
+                    ProductId = Guid.NewGuid(),
                     ProductTypeId = 3
                 }
             };

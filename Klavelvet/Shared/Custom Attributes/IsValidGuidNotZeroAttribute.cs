@@ -13,13 +13,14 @@ namespace Klavelvet.Shared.Custom_Attributes
             }
 
             // Check if the value is a string.
-            if (!(value is string))
+            if (!(value is Guid))
             {
-                return new ValidationResult("The value must be a string.");
+
+                return new ValidationResult("The value must be a GUID.");
             }
 
             // Check if the GUID is valid.
-            if (!IsValidGuidNotZero((string)value))
+            if (!IsValidGuidNotZero(value.ToString()))
             {
                 return new ValidationResult("The GUID is not valid.");
             }
@@ -47,6 +48,6 @@ namespace Klavelvet.Shared.Custom_Attributes
 
             // If all of the values in the guid are zero, then it is a default guid.
             return false;
-        }
+        }        
     }
 }
